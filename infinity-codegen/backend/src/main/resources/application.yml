@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/infinity_codegen?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  # 文件上传大小限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  # 静态资源配置
+  resources:
+    static-locations: classpath:/static/
+  # 模板引擎配置
+  freemarker:
+    template-loader-path: classpath:/templates/
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.infinity.codegen.entity
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# 代码生成配置
+gen:
+  # 作者
+  author: infinity
+  # 默认生成包路径
+  packageName: com.infinity.scaffold
+  # 自动去除表前缀
+  autoRemovePre: true
+  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
+  tablePrefix: sys_,tb_
+  # 模板路径
+  templatePath: templates
+  # 输出路径（默认为项目路径）
+  outputDir: D:/infinity/infinity-scaffold
+  
+# AI相关配置
+ai:
+  provider: openai
+  api-key: ${AI_API_KEY:your_default_key}
+  model: gpt-3.5-turbo
+  url: https://api.openai.com/v1
+  
+# 日志配置
+logging:
+  level:
+    com.infinity.codegen: debug
+    org.springframework: warn 
