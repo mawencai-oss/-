@@ -1,0 +1,13 @@
+@echo off
+echo 正在启动Infinity Scaffold项目...
+
+echo 启动后端服务...
+start cmd /k "cd backend && mvn spring-boot:run"
+
+echo 等待后端启动...
+timeout /t 10 /nobreak
+
+echo 启动前端服务...
+start cmd /k "cd frontend && npm run dev"
+
+echo 项目已启动，请查看命令行窗口了解详情。 
